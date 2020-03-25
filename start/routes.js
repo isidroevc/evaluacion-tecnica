@@ -31,5 +31,9 @@ Route.group(() => {
 }).middleware(['auth']).prefix('candidates')
 
 Route.group(() => {
+  Route.post('/register', 'CandidateController.store').validator('StoreCandidate')
+}).prefix('candidates')
+
+Route.group(() => {
   Route.get('/:id', 'AttachmentController.download')
 }).middleware(['auth']).prefix('attachments')

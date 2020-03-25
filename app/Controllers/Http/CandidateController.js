@@ -164,6 +164,8 @@ class CandidateController {
       return response.status(error.status).send(error)
     }
   }
+
+  
 }
 
 module.exports = CandidateController
