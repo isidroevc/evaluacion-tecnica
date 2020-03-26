@@ -100,8 +100,21 @@ class CandidateController {
   }
 
   async update({request, response, params}) {
-    const files = request.file('files')._files
-    const data = request.except(['id'])
+    let files = request.file('files');
+    if (files)
+      files = files._files;
+      const data = request.only([
+        'country_id',
+        'name',
+        'last_name',
+        'age',
+        'current_job',
+        'email',
+        'phone',
+        'company',
+        'province',
+        'city'
+      ])
     const id = params.id
     const candidate = await Candidate.findBy('id', id)
     if (!candidate) {
@@ -110,20 +123,24 @@ class CandidateController {
           message: 'Model instance not found'
         })
     }
-    const filesValidationMessages = await this._validateFiles(files)
-    if (filesValidationMessages.length > 0) {
-      return response.status(400)
-        .send(filesValidationMessages)
+    if (files) {
+      const filesValidationMessages = await this._validateFiles(files)
+      if (filesValidationMessages.length > 0) {
+        return response.status(400)
+          .send(filesValidationMessages)
+      }
     }
     const transaction = await Database.beginTransaction()
     try {
       await Candidate.query().where('id', id).update(data, transaction)
-      for(let i = 0; i < files.length; i++)
-        await this._createAttachment(id, transaction, files[i])
+      if(files)
+        for(let i = 0; i < files.length; i++)
+          await this._createAttachment(id, transaction, files[i])
       await transaction.commit()
       await candidate.load('attachments')
       return candidate
     } catch(error) {
+      console.log(error)
       await transaction.rollback()
       return response.status(500).send(error)
     }
