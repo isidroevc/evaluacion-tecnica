@@ -7,6 +7,9 @@ class Candidate extends Model {
   attachments() {
     return this.hasMany('App/Models/Attachment')
   }
+  country() {
+    return this.belongsTo('App/Models/Country')
+  }
 }
 
 module.exports = Candidate

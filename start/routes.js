@@ -22,6 +22,14 @@ Route.group(() => {
 }).prefix('users')
 
 Route.group(() => {
+  Route.get('/:id', 'UserController.findById')
+}).prefix('users').middleware(['auth'])
+
+Route.group(() => {
+  Route.get('/', 'CountryController.get')
+}).prefix('countries')
+
+Route.group(() => {
   Route.post('/', 'CandidateController.store').validator('StoreCandidate')
   Route.get('/:id', 'CandidateController.findById')
   Route.get('/', 'CandidateController.search')

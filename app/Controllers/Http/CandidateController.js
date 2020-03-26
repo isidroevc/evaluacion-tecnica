@@ -95,9 +95,8 @@ class CandidateController {
         .orWhere('city', 'ilike', likeParam)
         .orWhere('province', 'ilike', likeParam)
       })
-        
     }
-    return await candidateQuery.paginate(page, 10)
+    return await candidateQuery.with('country').paginate(page, 10)
   }
 
   async update({request, response, params}) {

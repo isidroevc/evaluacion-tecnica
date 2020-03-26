@@ -34,6 +34,15 @@ class UserController {
       })
     }
   }
+
+  async findById({params, response}) {
+    const user = await User.findBy('id', params.id);
+    if (!user)
+      return response.status(404).send({
+        message: 'User not found'
+      });
+    return user;
+  }
 }
 
 module.exports = UserController
