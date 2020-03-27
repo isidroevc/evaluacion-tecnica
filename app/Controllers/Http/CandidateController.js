@@ -29,8 +29,6 @@ class CandidateController {
     attachment.filename = file.clientName
     await Attachment.create(attachment, transaction)
     const buffer = fs.readFileSync(file.tmpPath)
-    console.log(buffer.length)
-    console.log(file.tmpPath)
     await Drive.put(attachment.id, buffer)
   }
 
@@ -142,7 +140,6 @@ class CandidateController {
       await candidate.load('attachments')
       return candidate
     } catch(error) {
-      console.log(error)
       await transaction.rollback()
       return response.status(500).send(error)
     }

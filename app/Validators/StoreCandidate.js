@@ -1,13 +1,12 @@
 'use strict'
 const indicative = require('indicative')
-console.log(Object.keys(indicative))
 class StoreCandidate {
   get rules () {
     return {
       country_id:  'required',
       name: 'required|max:80',
       last_name: 'required|max:80',
-      age: 'required|range:1,130',
+      age: 'required|range:15,130',
       current_job: 'max:100',
       email: 'required|email|max:80',
       phone: 'required|max:10',

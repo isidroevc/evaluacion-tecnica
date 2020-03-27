@@ -14,7 +14,6 @@ class AttachmentController {
     response.implicitEnd = false
     response.response.setHeader('Content-type', attachment.mime_type)
     response.response.setHeader('Content-disposition', 'attachment; filename=' + attachment.filename)
-    console.log(file)
     file.pipe(response.response)
   }
 }

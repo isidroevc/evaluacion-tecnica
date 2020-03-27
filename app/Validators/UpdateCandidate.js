@@ -4,7 +4,7 @@ class UpdateCandidate {
     return {
       name: 'max:80',
       last_name: 'max:80',
-      age: 'range:1,130',
+      age: 'range:15,130',
       current_job: 'max:100',
       email: 'email|max:80',
       phone: 'required|max:10',

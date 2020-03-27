@@ -23,6 +23,8 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('/:id', 'UserController.findById')
+  Route.post('/logout', 'UserController.logout')
+  Route.post('/check-login', 'UserController.checkLogin')
 }).prefix('users').middleware(['auth'])
 
 Route.group(() => {
