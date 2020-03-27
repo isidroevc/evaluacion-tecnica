@@ -100,23 +100,24 @@ class CandidateController {
   }
 
   async update({request, response, params}) {
-    let files = request.file('files');
+    let files = request.file('files')
     if (files)
       files = files._files;
-      const data = request.only([
-        'country_id',
-        'name',
-        'last_name',
-        'age',
-        'current_job',
-        'email',
-        'phone',
-        'company',
-        'province',
-        'city'
-      ])
+    const data = request.only([
+      'country_id',
+      'name',
+      'last_name',
+      'age',
+      'current_job',
+      'email',
+      'phone',
+      'company',
+      'province',
+      'city'
+    ])
+
     const id = params.id
-    const candidate = await Candidate.findBy('id', id)
+    let candidate = await Candidate.findBy('id', id)
     if (!candidate) {
       return response.status(404)
         .send({
@@ -137,6 +138,7 @@ class CandidateController {
         for(let i = 0; i < files.length; i++)
           await this._createAttachment(id, transaction, files[i])
       await transaction.commit()
+      candidate = await Candidate.findBy('id', id)
       await candidate.load('attachments')
       return candidate
     } catch(error) {

@@ -25,7 +25,7 @@ module.exports = {
     |
     */
     local: {
-      root: '/home/isidro/www/attachments/',
+      root: Env.get('STORAGE_ROOT'),
       driver: 'local'
     },
 

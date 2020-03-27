@@ -1,5 +1,6 @@
 'use strict'
-
+const indicative = require('indicative')
+console.log(Object.keys(indicative))
 class StoreCandidate {
   get rules () {
     return {
@@ -9,14 +10,14 @@ class StoreCandidate {
       age: 'required|range:1,130',
       current_job: 'max:100',
       email: 'required|email|max:80',
-      phone: 'required|max:15',
+      phone: 'required|max:10',
       company: 'max:100',
       province: 'required|max:100',
       city: 'required|max:100'
     }
   }
   async fails (errorMessages) {
-    return this.ctx.response.send(errorMessages)
+    return this.ctx.response.status(400).send(errorMessages)
   }
 }
 
